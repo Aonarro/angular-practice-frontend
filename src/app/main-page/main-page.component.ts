@@ -26,7 +26,6 @@ export class MainPageComponent implements OnInit {
 
   onSelectCustomer(customer: any): void {
     this.selectedCustomer = customer;
-    console.log(this.selectedCustomer);
     this.taskService.getTasks(this.selectedCustomer._id).subscribe((tasks) => {
       this.tasks = tasks;
     });
@@ -34,7 +33,28 @@ export class MainPageComponent implements OnInit {
 
   onClickAddTaskForm(): void {
     this.showAddTaskForm = true;
-    console.log(this.showAddTaskForm);
+  }
+
+  onClickDeleteTask(task: any): void {
+    const taskId = task._id;
+
+    this.taskService.deleteTask(taskId).subscribe((response) => {
+      this.taskService
+        .getTasks(this.selectedCustomer._id)
+        .subscribe((tasks) => {
+          this.tasks = tasks;
+        });
+    });
+  }
+
+  onClickDoneTask(task: any): void {
+    this.taskService.doneTask(task).subscribe((response) => {
+      this.taskService
+        .getTasks(this.selectedCustomer._id)
+        .subscribe((tasks) => {
+          this.tasks = tasks;
+        });
+    });
   }
 
   onTaskAdded(): void {

@@ -80,6 +80,7 @@
 
     .task__list {
       &-item {
+        position: relative;
         display: flex;
         width: 100%;
         padding: 10px;
@@ -89,6 +90,20 @@
         flex-direction: column;
         margin-bottom: 10px;
 
+        &_done {
+          font-size: 20px;
+          top: 7px;
+          right: 35px;
+          position: absolute;
+          cursor: pointer;
+        }
+        &_delete {
+          font-size: 35px;
+          top: 1px;
+          right: 5px;
+          position: absolute;
+          cursor: pointer;
+        }
         .task-value {
           font-weight: 600;
         }

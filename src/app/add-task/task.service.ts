@@ -21,4 +21,15 @@ export class TaskService {
   addTask(task: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/tasks/new`, task);
   }
+
+  deleteTask(taskId: any): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/tasks/${taskId}`);
+  }
+
+  doneTask(task: any): Observable<any> {
+    const taskId = task._id;
+    return this.http.put<any>(`${this.apiUrl}/tasks/${taskId}`, {
+      done: !task.done,
+    });
+  }
 }

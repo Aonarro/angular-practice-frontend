@@ -1,0 +1,72 @@
+<div class="main-wrapper">
+  <div class="sidebar">
+    <ul>
+      <li
+        *ngFor="let customer of customers"
+        (click)="onSelectCustomer(customer)"
+      >
+        <div
+          class="sidebar__item"
+          [ngClass]="{
+            active: customer._id === selectedCustomer?._id
+          }"
+        >
+          <div class="sidebar__item-name">{{ customer.name }}</div>
+          <div class="sidebar__item-email">{{ customer.email }}</div>
+          <div class="sidebar__item-phone">+{{ customer.phone }}</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="content">
+    <div class="content__empty-msg" *ngIf="!selectedCustomer">
+      Please select a customer
+    </div>
+    <div *ngIf="selectedCustomer && !showAddTaskForm" class="content__wrapper">
+      <div class="content__wrapper-header">
+        <h2>Tasks for {{ selectedCustomer.name }}</h2>
+        <button class="content__add-button" (click)="onClickAddTaskForm()">
+          Add Task
+        </button>
+      </div>
+      <ul class="task__list">
+        <li *ngFor="let task of tasks" class="task__list-item">
+          <div class="list-item-body">
+            Task details:
+            <span class="task-value"
+              >{{ task.description }} - {{ task.date | date }}</span
+            >
+            <div class="customer__info">
+              <div class="customer__info-name">
+                Customer name:
+                <span class="task-value">{{ task.customerId.name }}</span>
+              </div>
+              <div class="customer__info-businessField">
+                Customer businessField:
+                <span class="task-value">{{
+                  task.customerId.businessField
+                }}</span>
+              </div>
+            </div>
+          </div>
+          <hr />
+          <div class="task__status">
+            Task status:
+            <span class="task__status-info_inProgress" *ngIf="!task.done">{{
+              task.done ? "Finished" : "In progress"
+            }}</span>
+            <span class="task__status-info_finished" *ngIf="task.done">{{
+              task.done ? "Finished" : "In progress"
+            }}</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div *ngIf="showAddTaskForm">
+      <app-add-task
+        [customerId]="selectedCustomer._id"
+        (taskAdded)="onTaskAdded()"
+      ></app-add-task>
+    </div>
+  </div>
+</div>
